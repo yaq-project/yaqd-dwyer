@@ -1,6 +1,7 @@
 protocol = "dwyer-temperature-controller"
 doc = ""
-traits = ["is-daemon"]
+traits = ["has-limits", "has-position", "uses-uart", "uses-serial", "is-daemon"]
+hardware = ["dwyer:16b", "dwyer:16c"]
 
 [links]
 source = "https://gitlab.com/yaq/yaqd-dwyer"
@@ -14,4 +15,3 @@ PyPI = "https://pypi.org/project/yaqd-dwyer"
 [state]
 
 [messages]
-
