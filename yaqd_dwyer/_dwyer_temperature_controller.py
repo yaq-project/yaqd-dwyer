@@ -3,8 +3,8 @@ __all__ = ["DwyerTemperatureController"]
 import asyncio
 from typing import Dict, Any, List
 
-import serial
-import minimalmodbus
+import serial  # type: ignore
+import minimalmodbus  # type: ignore
 
 from yaqd_core import HasLimits, HasPosition, UsesSerial, UsesUart, IsDaemon
 
