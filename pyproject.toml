@@ -30,8 +30,8 @@ Issues = "https://gitlab.com/yaq/yaqd-dwyer/issues"
 dev = ["black", "pre-commit"]
 
 [tool.flit.scripts]
-yaqd-dwyer-16b = "yaqd_dwyer._dwyer_16b:Dwyer16b.main"
-yaqd-dwyer-16c = "yaqd_dwyer._dwyer_16b:Dwyer16b.main"
+yaqd-dwyer-16b = "yaqd_dwyer._dwyer_16b:Dwyer16B.main"
+yaqd-dwyer-16c = "yaqd_dwyer._dwyer_16c:Dwyer16C.main"
 
 [tool.black]
 line-length = 99
