@@ -1,0 +1,17 @@
+protocol = "dwyer-temperature-controller"
+doc = ""
+traits = ["is-daemon"]
+
+[links]
+source = "https://gitlab.com/yaq/yaqd-dwyer"
+bugtracker = "https://gitlab.com/yaq/yaqd-dwyer/-/issues"
+
+[installation]
+PyPI = "https://pypi.org/project/yaqd-dwyer"
+
+[config]
+
+[state]
+
+[messages]
+
