@@ -8,12 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: ["3.8", "3.9", "3.10"]
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install apt package deps
-      run: sudo apt install libhdf5-dev
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
@@ -22,7 +20,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip!=20.3.4,!=21.0.*
         python -m pip install --upgrade wheel setuptools
-        python -m pip install --upgrade .[dev]
+        python -m pip install --upgrade .
     - name: Test with pytest
       run: |
         yaqd-dwight-temperature-controller --version
