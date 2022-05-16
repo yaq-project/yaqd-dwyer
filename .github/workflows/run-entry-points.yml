@@ -1,5 +1,4 @@
 name: run entry points
-key: ${{ runner.os }}-mycache-v1-${{ hashFiles(...) }}
 
 on: [push]
 
