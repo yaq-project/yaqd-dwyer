@@ -65,7 +65,9 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
         # TODO: can only change in increments of one minute...
         time = int(change / self._state["rate"])
         self._instrument.write_register(0x2080, 0)  # do not soak at current temperature
-        self._instrument.write_register(0x2000, current_temperature)  # start at current temperature
+        self._instrument.write_register(
+            0x2000, current_temperature
+        )  # start at current temperature
         self._instrument.write_register(0x2081, time)  # reach goal temperature at time
         self._instrument.write_register(0x2001, temp2int(position))  # goal temperature
         self._instrument.write_register(0x2082, 900)  # wait "forever" ...
@@ -81,7 +83,7 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
         def callback():
             self._ramping = False
 
-        self._loop.call_later(delay=time*60, callback=callback)
+        self._loop.call_later(delay=time * 60, callback=callback)
 
     async def update_state(self):
         """Continually monitor and update the current daemon state."""
