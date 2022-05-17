@@ -15,7 +15,7 @@ def int2temp(value):
     return value / 10
 
 
-def temp2value(value):
+def temp2int(value):
     value = int(value * 10)
     if value < 0:
         value += 2**15
@@ -36,6 +36,7 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
         self._instrument.serial.parity = self._config["parity"]
         self._instrument.handle_local_echo = self._config["modbus_handle_echo"]
         # ensure that control method is PID
+        self._ramping = False
         self._instrument.write_register(0x1005, 0)
         # units
         if self._instrument.read_bit(0x0811):
@@ -45,20 +46,54 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
         # limits
         self._state["hw_limits"][0] = int2temp(self._instrument.read_register(0x1003))
         self._state["hw_limits"][1] = int2temp(self._instrument.read_register(0x1002))
+        # normalize patterns
+        self._instrument.write_register(0x1030, 0)  # start pattern is pattern zero
+        self._instrument.write_register(0x1060, 8)  # program ends after pattern zero
+        for i in range(8):
+            self._instrument.write_register(0x2000 + i, 0)  # set points for pattern zero
+            self._instrument.write_register(0x2080 + i, 0)  # execution time for pattern zero
+
+        # TODO: default in toml, yaq property
+        self._state["rate"] = 1  # degrees per minute
 
     def direct_serial_write(self, message: bytes):
         self._instrument.serial.write(message)
 
     def _set_position(self, position: float):
-        value = int(position * 10)
-        self._instrument.write_register(0x1001, value)
+        current_temperature = self._state["position"]
+        change = abs(current_temperature - position)
+        # TODO: can only change in increments of one minute...
+        time = int(change / self._state["rate"])
+        self._instrument.write_register(0x2080, 0)  # do not soak at current temperature
+        self._instrument.write_register(0x2000, current_temperature)  # start at current temperature
+        self._instrument.write_register(0x2081, time)  # reach goal temperature at time
+        self._instrument.write_register(0x2001, temp2int(position))  # goal temperature
+        self._instrument.write_register(0x2082, 900)  # wait "forever" ...
+        self._instrument.write_register(0x2002, temp2int(position))  # ... at goal temperature
+        # launch
+        self._instrument.write_register(0x1005, 3)
+        self._instrument.write_bit(0x0814, 1)  # control RUN
+        self._instrument.write_bit(0x0815, 0)  # program RUN
+        self._instrument.write_bit(0x0816, 0)  # program UNPAUSE
+        self._state["destination"] = position
+        self._ramping = True
+
+        def callback():
+            self._ramping = False
+
+        self._loop.call_later(delay=time*60, callback=callback)
 
     async def update_state(self):
         """Continually monitor and update the current daemon state."""
-        # If there is no state to monitor continuously, delete this function
         while True:
             try:
-                self._busy = False
+                print(self._ramping)
+                if self._ramping:
+                    self._busy = True
+                else:
+                    self._busy = False
+                    self._instrument.write_register(0x1005, 0)
+                    self._instrument.write_register(0x1001, temp2int(self._state["destination"]))
                 registers = self._instrument.read_registers(0x1000, 5)
                 self._state["position"] = registers[0] / 10
                 self._state["destination"] = registers[1] / 10
