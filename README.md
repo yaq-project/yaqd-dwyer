@@ -13,3 +13,7 @@ This package contains the following daemon(s):
 
 - https://yaq.fyi/daemons/dwyer-16b
 - https://yaq.fyi/daemons/dwyer-16c
+
+Package maintainer(s):
+
+- [Blaise Thompson](https://github.com/untzag)
