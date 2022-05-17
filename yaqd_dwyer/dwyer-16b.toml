@@ -1,0 +1,17 @@
+protocol = "dwyer-16b"
+doc = ""
+traits = ["has-limits", "has-position", "uses-uart", "uses-serial", "is-daemon"]
+hardware = ["dwyer:16b"]
+
+[links]
+source = "https://gitlab.com/yaq/yaqd-dwyer"
+bugtracker = "https://gitlab.com/yaq/yaqd-dwyer/-/issues"
+
+[installation]
+PyPI = "https://pypi.org/project/yaqd-dwyer"
+
+[config]
+
+[state]
+
+[messages]

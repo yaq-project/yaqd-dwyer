@@ -1,7 +1,7 @@
-protocol = "dwyer-temperature-controller"
+protocol = "dwyer-16c"
 doc = ""
 traits = ["has-limits", "has-position", "uses-uart", "uses-serial", "is-daemon"]
-hardware = ["dwyer:16b", "dwyer:16c"]
+hardware = ["dwyer:16c"]
 
 [links]
 source = "https://gitlab.com/yaq/yaqd-dwyer"

@@ -11,4 +11,5 @@ yaq daemons for Dwyer instruments & controllers
 
 This package contains the following daemon(s):
 
-- https://yaq.fyi/daemons/dwyer-temperature-controller
+- https://yaq.fyi/daemons/dwyer-16b
+- https://yaq.fyi/daemons/dwyer-16c

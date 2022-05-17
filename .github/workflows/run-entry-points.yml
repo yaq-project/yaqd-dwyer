@@ -25,7 +25,9 @@ jobs:
         python -m pip install --upgrade .
     - name: Test with pytest
       run: |
-        yaqd-dwyer-temperature-controller --version
-        yaqd-dwyer-temperature-controller --help
+        yaqd-dwyer-16b --version
+        yaqd-dwyer-16b --help
+        yaqd-dwyer-16c --version
+        yaqd-dwyer-16c --help
 
 

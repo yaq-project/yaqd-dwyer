@@ -22,13 +22,14 @@ def temp2value(value):
     return value
 
 
-class DwyerTemperatureController(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
-    _kind = "dwyer-temperature-controller"
+class Dwyer16C(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
+    _kind = "dwyer-16b"
 
     def __init__(self, name, config, config_filepath):
         super().__init__(name, config, config_filepath)
-        self._instrument = minimalmodbus.Instrument(port=self._config["serial_port"],
-                                                    slaveaddress = self._config["modbus_address"])
+        self._instrument = minimalmodbus.Instrument(
+            port=self._config["serial_port"], slaveaddress=self._config["modbus_address"]
+        )
         self._instrument.serial.baudrate = self._config["baud_rate"]
         self._instrument.serial.bytesize = self._config["byte_size"]
         self._instrument.serial.stopbits = self._config["stop_bits"]

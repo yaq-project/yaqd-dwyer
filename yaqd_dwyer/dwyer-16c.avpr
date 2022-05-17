@@ -93,6 +93,9 @@
         }
     },
     "doc": "",
+    "hardware": [
+        "dwyer:16c"
+    ],
     "installation": {
         "PyPI": "https://pypi.org/project/yaqd-dwyer"
     },
@@ -248,7 +251,7 @@
             "units_getter": "get_units"
         }
     },
-    "protocol": "dwyer-temperature-controller",
+    "protocol": "dwyer-16c",
     "requires": [],
     "state": {
         "destination": {
