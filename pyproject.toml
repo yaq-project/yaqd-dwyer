@@ -6,7 +6,6 @@ build-backend = "flit_core.buildapi"
 module = "yaqd_dwyer"
 dist-name = "yaqd-dwyer"
 author = "yaq developers"
-author-email = None
 home-page = "https://yaq.fyi"
 description-file = "README.md"
 requires-python = ">=3.7"
