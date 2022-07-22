@@ -12,6 +12,30 @@ PyPI = "https://pypi.org/project/yaqd-dwyer"
 
 [config]
 
+[config.byte_size]
+type = "int"
+doc = "Byte size of your instrument."
+
+[config.stop_bits]
+type = {"type"="enum", "name"="stop_bits", "symbols"=["one", "one_and_half", "two"]}
+doc = "Number of stop bits."
+default = "one"
+
+[config.parity]
+type = {"type"="enum", "name"="parity", "symbols"=["even", "odd", "none"]}
+doc = "Modbus parity."
+default = "none"
+
+[config.modbus_handle_echo]
+type = "boolean"
+doc = "Configure echo handling."
+default = true
+
+[config.modbus_address]
+type = "int"
+doc = "Unique address in the modbus network."
+default = 1
+
 [state]
 
 [messages]
