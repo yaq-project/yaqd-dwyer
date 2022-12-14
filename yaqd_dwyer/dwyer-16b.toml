@@ -17,6 +17,7 @@ PyPI = "https://pypi.org/project/yaqd-dwyer"
 [state.ramp_time]
 type = "double"
 doc = "Ramp time, in minutes."
+default = 0.0
 
 [messages]
 
@@ -39,6 +40,7 @@ doc = "Ramp time units."
 [properties]
 
 [properties.ramp_time]
+type = "float"
 doc = "Ramp time."
 getter = "get_ramp_time"
 setter = "set_ramp_time"
