@@ -14,4 +14,35 @@ PyPI = "https://pypi.org/project/yaqd-dwyer"
 
 [state]
 
+[state.ramp_time]
+type = "double"
+doc = "Ramp time, in minutes."
+
 [messages]
+
+[messages.get_ramp_time]
+response = "double"
+doc = "Ramp time, in minutes."
+
+[messages.set_ramp_time]
+request = [{"name"="ramp_time", "type"="float"}]
+doc = "Ramp time, in minutes. Set to zero to disable ramping."
+
+[messages.get_ramp_time_limits]
+response = {"type"="array", "items"="double"}
+doc = "Ramp time limits in minutes."
+
+[messages.get_ramp_time_units]
+response = "string"
+doc = "Ramp time units."
+
+[properties]
+
+[properties.ramp_time]
+doc = "Ramp time."
+getter = "get_ramp_time"
+setter = "set_ramp_time"
+units_getter = "get_ramp_time_units"
+limits_getter = "get_ramp_time_limits"
+control_kind = "hinted"
+record_kind = "metadata"
