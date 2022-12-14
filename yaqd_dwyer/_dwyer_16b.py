@@ -59,16 +59,23 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
     def direct_serial_write(self, message: bytes):
         self._instrument.serial.write(message)
 
+    def get_ramp_time(self) -> float:
+        return self._state["ramp_time"]
+
+    def get_ramp_time_limits(self) -> List[float]:
+        return [0.0, 900.0]
+
+    def get_ramp_time_units(self) -> str:
+        return "min"
+
     def _set_position(self, position: float):
         current_temperature = self._state["position"]
-        change = abs(current_temperature - position)
-        # TODO: can only change in increments of one minute...
-        time = int(change / self._state["rate"])
-        self._instrument.write_register(0x2080, 0)  # do not soak at current temperature
-        self._instrument.write_register(
-            0x2000, current_temperature
-        )  # start at current temperature
-        self._instrument.write_register(0x2081, time)  # reach goal temperature at time
+        # do not soak at current temperature
+        self._instrument.write_register(0x2080, 0)
+        # start at current temperature
+        self._instrument.write_register(0x2000, current_temperature)
+        # reach goal temperature at time
+        self._instrument.write_register(0x2081, int(self._state["ramp_time"]))
         self._instrument.write_register(0x2001, temp2int(position))  # goal temperature
         self._instrument.write_register(0x2082, 900)  # wait "forever" ...
         self._instrument.write_register(0x2002, temp2int(position))  # ... at goal temperature
@@ -77,19 +84,20 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
         self._instrument.write_bit(0x0814, 1)  # control RUN
         self._instrument.write_bit(0x0815, 0)  # program RUN
         self._instrument.write_bit(0x0816, 0)  # program UNPAUSE
-        self._state["destination"] = position
         self._ramping = True
 
         def callback():
             self._ramping = False
 
-        self._loop.call_later(delay=time * 60, callback=callback)
+        self._loop.call_later(delay=self._state["ramp_time"], callback=callback)
+
+    def set_ramp_time(self, ramp_time: float) -> None:
+        self._state["ramp_time"] = ramp_time
 
     async def update_state(self):
         """Continually monitor and update the current daemon state."""
         while True:
             try:
-                print(self._ramping)
                 if self._ramping:
                     self._busy = True
                 else:
