@@ -2,6 +2,7 @@ __all__ = ["DwyerTemperatureController"]
 
 import asyncio
 from typing import Dict, Any, List
+import math
 
 import serial  # type: ignore
 import minimalmodbus  # type: ignore
@@ -69,6 +70,10 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
         return "min"
 
     def _set_position(self, position: float):
+        if self._state["ramp_time"] == 0:
+            self._instrument.write_register(0x1005, 0)
+            self._instrument.write_register(0x1001, temp2int(position))
+            return
         current_temperature = self._state["position"]
         # do not soak at current temperature
         self._instrument.write_register(0x2080, 0)
@@ -89,7 +94,7 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
         def callback():
             self._ramping = False
 
-        self._loop.call_later(delay=self._state["ramp_time"], callback=callback)
+        self._loop.call_later(delay=self._state["ramp_time"] * 60, callback=callback)
 
     def set_ramp_time(self, ramp_time: float) -> None:
         self._state["ramp_time"] = ramp_time
@@ -103,10 +108,17 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
                 else:
                     self._busy = False
                     self._instrument.write_register(0x1005, 0)
-                    self._instrument.write_register(0x1001, temp2int(self._state["destination"]))
+                    if not math.isnan(self._state["destination"]):
+                        self._instrument.write_register(0x1001, temp2int(self._state["destination"]))
                 registers = self._instrument.read_registers(0x1000, 5)
                 self._state["position"] = registers[0] / 10
                 self._state["destination"] = registers[1] / 10
                 await asyncio.sleep(0.25)
             except minimalmodbus.LocalEchoError:
+                continue
+            except minimalmodbus.InvalidResponseError:
+                continue
+            except minimalmodbus.NoResponseError:
+                continue
+            except minimalmodbus.SlaveReportedException:
                 continue
