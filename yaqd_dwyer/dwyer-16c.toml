@@ -4,8 +4,8 @@ traits = ["has-limits", "has-position", "uses-uart", "uses-serial", "is-daemon"]
 hardware = ["dwyer:16c"]
 
 [links]
-source = "https://gitlab.com/yaq/yaqd-dwyer"
-bugtracker = "https://gitlab.com/yaq/yaqd-dwyer/-/issues"
+source = "https://github.com/yaq-project/yaqd-dwyer"
+bugtracker = "https://gitlab.com/yaq-project/yaqd-dwyer/-/issues"
 
 [installation]
 PyPI = "https://pypi.org/project/yaqd-dwyer"
