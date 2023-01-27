@@ -109,7 +109,9 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
                     self._busy = False
                     self._instrument.write_register(0x1005, 0)
                     if not math.isnan(self._state["destination"]):
-                        self._instrument.write_register(0x1001, temp2int(self._state["destination"]))
+                        self._instrument.write_register(
+                            0x1001, temp2int(self._state["destination"])
+                        )
                 registers = self._instrument.read_registers(0x1000, 5)
                 self._state["position"] = registers[0] / 10
                 self._state["destination"] = registers[1] / 10
