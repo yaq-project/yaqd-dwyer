@@ -12,3 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Added
 - initial release
+
+[Unreleased]: https://github.com/yaq-project/yaqd-dwyer/compare/v2022.7.0...main
+[2022.7.0]: https://gihub.com/yaq-project/yaqd-dwyer/tags/v2022.7.0
+
