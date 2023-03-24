@@ -445,32 +445,6 @@
         {
             "fields": [
                 {
-                    "name": "set_point_value",
-                    "type": "double"
-                },
-                {
-                    "name": "proportional",
-                    "type": "double"
-                },
-                {
-                    "name": "integral",
-                    "type": "double"
-                },
-                {
-                    "name": "derivative",
-                    "type": "double"
-                },
-                {
-                    "name": "integral_deviation",
-                    "type": "double"
-                }
-            ],
-            "name": "pid",
-            "type": "record"
-        },
-        {
-            "fields": [
-                {
                     "name": "shape",
                     "type": {
                         "items": "int",
