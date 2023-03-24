@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+- 16b: extra properties for PID settings
+- 16b: now forces usage of PID profile 0 only
+
 ## [2023.1.0]
 
 ### Changed
@@ -21,4 +25,3 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 [Unreleased]: https://github.com/yaq-project/yaqd-dwyer/compare/v2023.1.0...main
 [2023.1.0]: https://github.com/yaq-project/yaqd-dwyer/compare/v2022.7.0...2023.1.0
 [2022.7.0]: https://gihub.com/yaq-project/yaqd-dwyer/tags/v2022.7.0
-

@@ -3,6 +3,7 @@ __all__ = ["DwyerTemperatureController"]
 import asyncio
 from typing import Dict, Any, List
 import math
+import struct
 
 import serial  # type: ignore
 import minimalmodbus  # type: ignore
@@ -56,9 +57,24 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
 
         # TODO: default in toml, yaq property
         self._state["rate"] = 1  # degrees per minute
+        # pid
+        self._instrument.write_register(0x101C, 0)  # ensure using PID profile 0
+        self._loop.create_task(self._poll_pid())
 
     def direct_serial_write(self, message: bytes):
         self._instrument.serial.write(message)
+
+    def get_derivative_constant(self) -> float:
+        return self._state["derivative_constant"]
+
+    def get_integral_constant(self) -> float:
+        return self._state["integral_constant"]
+
+    def get_integral_offset(self) -> float:
+        return self._state["integral_offset"]
+
+    def get_proportional_constant(self) -> float:
+        return self._state["proportional_constant"]
 
     def get_ramp_time(self) -> float:
         return self._state["ramp_time"]
@@ -68,6 +84,20 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
 
     def get_ramp_time_units(self) -> str:
         return "min"
+
+    async def _poll_pid(self):
+        while True:
+            self._read_pid_to_state()
+            await asyncio.sleep(10)
+
+    def _read_pid_to_state(self):
+        data = self._instrument.read_registers(0x1009, 4)
+        data_bytes = struct.pack(">HHHH", *data)
+        p, i, d, io = struct.unpack(">HHHH", data_bytes)
+        self._state["proportional_constant"] = p / 10
+        self._state["integral_constant"] = i
+        self._state["derivative_constant"] = d
+        self._state["integral_offset"] = io / 10
 
     def _set_position(self, position: float):
         if self._state["ramp_time"] == 0:
@@ -98,6 +128,26 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
 
     def set_ramp_time(self, ramp_time: float) -> None:
         self._state["ramp_time"] = ramp_time
+
+    def set_derivative_constant(self, derivative):
+        self._instrument.write_register(0x101C, 0)  # ensure using PID profile 0
+        self._instrument.write_register(0x100B, derivative)
+        self._read_pid_to_state()
+
+    def set_integral_constant(self, integral):
+        self._instrument.write_register(0x101C, 0)  # ensure using PID profile 0
+        self._instrument.write_register(0x100A, integral)
+        self._read_pid_to_state()
+
+    def set_integral_offset(self, integral_offset):
+        self._instrument.write_register(0x101C, 0)  # ensure using PID profile 0
+        self._instrument.write_register(0x100C, integral_offset * 10)
+        self._read_pid_to_state()
+
+    def set_proportional_constant(self, proportional):
+        self._instrument.write_register(0x101C, 0)  # ensure using PID profile 0
+        self._instrument.write_register(0x1009, proportional * 10)
+        self._read_pid_to_state()
 
     async def update_state(self):
         """Continually monitor and update the current daemon state."""

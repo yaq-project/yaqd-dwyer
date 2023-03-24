@@ -19,7 +19,51 @@ type = "double"
 doc = "Ramp time, in minutes."
 default = 0.0
 
+[state.proportional_constant]
+type = "double"
+default = 0.0
+doc = "Proportional constant. Note that this daemon forces controller to only use PID profile zero."
+
+[state.integral_constant]
+type = "double"
+default = 0.0
+doc = "Integral constant. Note that this daemon forces controller to only use PID profile zero."
+
+[state.derivative_constant]
+type = "double"
+default = 0.0
+doc = "Derivative constant. Note that this daemon forces controller to only use PID profile zero."
+
+[state.integral_offset]
+type = "double"
+default = 0.0
+doc = "Integral offset. Correction value for systems that tend to ring. Note that this daemon forces controller to only use PID profile zero. Units percentage"
+
 [messages]
+
+[messages.get_derivative_constant]
+response = "double"
+
+[messages.set_derivative_constant]
+request = [{"name"="derivative", "type"="double"}]
+
+[messages.get_integral_constant]
+response = "double"
+
+[messages.set_integral_constant]
+request = [{"name"="integral", "type"="double"}]
+
+[messages.get_integral_offset]
+response = "double"
+
+[messages.set_integral_offset]
+request = [{"name"="integral_offset", "type"="double"}]
+
+[messages.get_proportional_constant]
+response = "double"
+
+[messages.set_proportional_constant]
+request = [{"name"="proportional", "type"="double"}]
 
 [messages.get_ramp_time]
 response = "double"
@@ -38,6 +82,38 @@ response = "string"
 doc = "Ramp time units."
 
 [properties]
+
+[properties.derivative_constant]
+type = "double"
+doc = "Derivative constant. Note that this daemon forces use of PID profile zero only."
+getter = "get_derivative_constant"
+setter = "set_derivative_constant"
+control_kind = "normal"
+record_kind = "metadata"
+
+[properties.integral_constant]
+type = "double"
+doc = "Integral constant. Note that this daemon forces use of PID profile zero only."
+getter = "get_integral_constant"
+setter = "set_integral_constant"
+control_kind = "normal"
+record_kind = "metadata"
+
+[properties.integral_offset]
+type = "double"
+doc = "Integral offset. Note that this daemon forces use of PID profile zero only."
+getter = "get_integral_offset"
+setter = "set_integral_offset"
+control_kind = "normal"
+record_kind = "metadata"
+
+[properties.proportional_constant]
+type = "double"
+doc = "Proportional constant. Note that this daemon forces use of PID profile zero only."
+getter = "get_proportional_constant"
+setter = "set_proportional_constant"
+control_kind = "normal"
+record_kind = "metadata"
 
 [properties.ramp_time]
 type = "float"
