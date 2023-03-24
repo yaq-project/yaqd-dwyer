@@ -1,0 +1,9 @@
+[dwyer]
+port = 38001
+serial_port = "/dev/ttyUSB0"
+baud_rate = 9600
+modbus_address = 1
+byte_size = 8
+stop_bits = 1
+parity = "E"
+modbus_handle_echo = true

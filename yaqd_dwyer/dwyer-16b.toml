@@ -6,6 +6,7 @@ hardware = ["dwyer:16b"]
 [links]
 source = "https://github.com/yaq-project/yaqd-dwyer"
 bugtracker = "https://gitlab.com/yaq-project/yaqd-dwyer/-/issues"
+example-configs = "https://github.com/yaq-project/yaqd-dwyer/tree/main/example-yaq-configs/dwyer-16b"
 
 [installation]
 PyPI = "https://pypi.org/project/yaqd-dwyer"
