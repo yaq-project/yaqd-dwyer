@@ -1,16 +1,41 @@
 protocol = "dwyer-16b"
-doc = ""
+doc = "Daemon for Dwyer 16b temperature controller with support for ramping. Note that this daemon assumes ModBus RTU."
 traits = ["has-limits", "has-position", "uses-uart", "uses-serial", "is-daemon"]
 hardware = ["dwyer:16b"]
 
 [links]
 source = "https://github.com/yaq-project/yaqd-dwyer"
 bugtracker = "https://gitlab.com/yaq-project/yaqd-dwyer/-/issues"
+example-configs = "https://github.com/yaq-project/yaqd-dwyer/tree/main/example-yaq-configs/dwyer-16b"
 
 [installation]
 PyPI = "https://pypi.org/project/yaqd-dwyer"
 
 [config]
+
+[config.byte_size]
+type = "int"
+doc = "Byte size of your instrument."
+
+[config.stop_bits]
+type = {"type"="enum", "name"="stop_bits", "symbols"=["one", "one_and_half", "two"]}
+doc = "Number of stop bits."
+default = "one"
+
+[config.parity]
+type = {"type"="enum", "name"="parity", "symbols"=["even", "odd", "none"]}
+doc = "Modbus parity."
+default = "none"
+
+[config.modbus_handle_echo]
+type = "boolean"
+doc = "Configure echo handling."
+default = true
+
+[config.modbus_address]
+type = "int"
+doc = "Unique address in the modbus network."
+default = 1
 
 [state]
 
