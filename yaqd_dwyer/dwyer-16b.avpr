@@ -4,6 +4,10 @@
             "origin": "uses-uart",
             "type": "int"
         },
+        "byte_size": {
+            "doc": "Byte size of your instrument.",
+            "type": "int"
+        },
         "enable": {
             "default": true,
             "doc": "Disable this daemon. The kind entry-point will not attempt to start this daemon.",
@@ -53,6 +57,16 @@
                 "string"
             ]
         },
+        "modbus_address": {
+            "default": 1,
+            "doc": "Unique address in the modbus network.",
+            "type": "int"
+        },
+        "modbus_handle_echo": {
+            "default": true,
+            "doc": "Configure echo handling.",
+            "type": "boolean"
+        },
         "model": {
             "default": null,
             "origin": "is-daemon",
@@ -73,6 +87,19 @@
             ],
             "type": "enum"
         },
+        "parity": {
+            "default": "none",
+            "doc": "Modbus parity.",
+            "type": {
+                "name": "parity",
+                "symbols": [
+                    "even",
+                    "odd",
+                    "none"
+                ],
+                "type": "enum"
+            }
+        },
         "port": {
             "doc": "TCP port for daemon to occupy.",
             "origin": "is-daemon",
@@ -90,9 +117,22 @@
         "serial_port": {
             "origin": "uses-uart",
             "type": "string"
+        },
+        "stop_bits": {
+            "default": "one",
+            "doc": "Number of stop bits.",
+            "type": {
+                "name": "stop_bits",
+                "symbols": [
+                    "one",
+                    "one_and_half",
+                    "two"
+                ],
+                "type": "enum"
+            }
         }
     },
-    "doc": "",
+    "doc": "Daemon for Dwyer 16b temperature controller with support for ramping. Note that this daemon assumes ModBus RTU.",
     "hardware": [
         "dwyer:16b"
     ],
@@ -101,6 +141,7 @@
     },
     "links": {
         "bugtracker": "https://gitlab.com/yaq-project/yaqd-dwyer/-/issues",
+        "example-configs": "https://github.com/yaq-project/yaqd-dwyer/tree/main/example-yaq-configs/dwyer-16b",
         "source": "https://github.com/yaq-project/yaqd-dwyer"
     },
     "messages": {
