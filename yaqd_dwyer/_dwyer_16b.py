@@ -54,9 +54,6 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
         for i in range(8):
             self._instrument.write_register(0x2000 + i, 0)  # set points for pattern zero
             self._instrument.write_register(0x2080 + i, 0)  # execution time for pattern zero
-
-        # TODO: default in toml, yaq property
-        self._state["rate"] = 1  # degrees per minute
         # pid
         self._instrument.write_register(0x101C, 0)  # ensure using PID profile 0
         self._loop.create_task(self._poll_pid())
