@@ -235,6 +235,11 @@
             "request": [],
             "response": "string"
         },
+        "get_temperature_regulation_value": {
+            "doc": "Current output duty cycle as a percentage.",
+            "request": [],
+            "response": "double"
+        },
         "get_units": {
             "doc": "Get units of daemon. These units apply to the position and destination properties.",
             "origin": "has-position",
@@ -425,6 +430,17 @@
             "setter": "set_ramp_time",
             "type": "float",
             "units_getter": "get_ramp_time_units"
+        },
+        "temperature_regulation_value": {
+            "control_kind": "normal",
+            "dynamic": true,
+            "getter": "get_temperature_regulation_value",
+            "limits_getter": null,
+            "options_getter": null,
+            "record_kind": "data",
+            "setter": null,
+            "type": "foat",
+            "units_getter": null
         }
     },
     "protocol": "dwyer-16b",
@@ -472,6 +488,11 @@
         "ramp_time": {
             "default": 0.0,
             "doc": "Ramp time, in minutes.",
+            "type": "double"
+        },
+        "temperature_regulation_value": {
+            "default": 0.0,
+            "doc": "Current output duty cycle as a percentage.",
             "type": "double"
         }
     },
