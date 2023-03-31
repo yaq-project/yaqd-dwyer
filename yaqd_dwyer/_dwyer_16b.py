@@ -87,6 +87,9 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
     def get_ramp_time_units(self) -> str:
         return "min"
 
+    def get_temperature_regulation_value(self) -> float:
+        return self._state["temperature_regulation_value"]
+
     async def _poll_pid(self):
         while True:
             self._read_pid_to_state()
@@ -167,6 +170,9 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
                 registers = self._instrument.read_registers(0x1000, 5)
                 self._state["position"] = registers[0] / 10
                 self._state["destination"] = registers[1] / 10
+                registers = self._instrument.read_registers(0x1016, 1)
+                data_bytes = struct.pack(">h", *registers)
+                self._state["temperature_regulation_value"] = struct.unpack(">h", data_bytes)[0]
                 await asyncio.sleep(0.25)
             except minimalmodbus.LocalEchoError:
                 continue
