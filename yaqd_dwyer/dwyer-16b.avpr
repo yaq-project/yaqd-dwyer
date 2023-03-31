@@ -201,6 +201,16 @@
                 "type": "array"
             }
         },
+        "get_output_1_duty": {
+            "doc": "Current output duty cycle as a percentage.",
+            "request": [],
+            "response": "double"
+        },
+        "get_output_2_duty": {
+            "doc": "Current output duty cycle as a percentage.",
+            "request": [],
+            "response": "double"
+        },
         "get_position": {
             "doc": "Get current daemon position.",
             "origin": "has-position",
@@ -234,11 +244,6 @@
             "origin": "is-daemon",
             "request": [],
             "response": "string"
-        },
-        "get_temperature_regulation_value": {
-            "doc": "Current output duty cycle as a percentage.",
-            "request": [],
-            "response": "double"
         },
         "get_units": {
             "doc": "Get units of daemon. These units apply to the position and destination properties.",
@@ -398,6 +403,28 @@
             "type": "double",
             "units_getter": null
         },
+        "output_1_duty": {
+            "control_kind": "normal",
+            "dynamic": true,
+            "getter": "get_output_1_duty",
+            "limits_getter": null,
+            "options_getter": null,
+            "record_kind": "data",
+            "setter": null,
+            "type": "foat",
+            "units_getter": null
+        },
+        "output_2_duty": {
+            "control_kind": "normal",
+            "dynamic": true,
+            "getter": "get_output_2_duty",
+            "limits_getter": null,
+            "options_getter": null,
+            "record_kind": "data",
+            "setter": null,
+            "type": "foat",
+            "units_getter": null
+        },
         "position": {
             "control_kind": "hinted",
             "dynamic": true,
@@ -430,17 +457,6 @@
             "setter": "set_ramp_time",
             "type": "float",
             "units_getter": "get_ramp_time_units"
-        },
-        "temperature_regulation_value": {
-            "control_kind": "normal",
-            "dynamic": true,
-            "getter": "get_temperature_regulation_value",
-            "limits_getter": null,
-            "options_getter": null,
-            "record_kind": "data",
-            "setter": null,
-            "type": "foat",
-            "units_getter": null
         }
     },
     "protocol": "dwyer-16b",

@@ -111,7 +111,11 @@ doc = "Ramp time limits in minutes."
 response = "string"
 doc = "Ramp time units."
 
-[messages.get_temperature_regulation_value]
+[messages.get_output_1_duty]
+response = "double"
+doc = "Current output duty cycle as a percentage."
+
+[messages.get_output_2_duty]
 response = "double"
 doc = "Current output duty cycle as a percentage."
 
@@ -159,9 +163,16 @@ limits_getter = "get_ramp_time_limits"
 control_kind = "hinted"
 record_kind = "metadata"
 
-[properties.temperature_regulation_value]
+[properties.output_1_duty]
 type = "foat"
 doc = "Current duty cycle as percentage."
-getter = "get_temperature_regulation_value"
+getter = "get_output_1_duty"
+control_kind = "normal"
+record_kind = "data"
+
+[properties.output_2_duty]
+type = "foat"
+doc = "Current duty cycle as percentage."
+getter = "get_output_2_duty"
 control_kind = "normal"
 record_kind = "data"

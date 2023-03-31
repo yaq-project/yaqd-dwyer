@@ -75,6 +75,12 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
     def get_integral_offset(self) -> float:
         return self._state["integral_offset"]
 
+    def get_output_1_duty(self) -> float:
+        return self._state["output_1_duty"]
+
+    def get_output_2_duty(self) -> float:
+        return self._state["output_2_duty"]
+
     def get_proportional_constant(self) -> float:
         return self._state["proportional_constant"]
 
@@ -170,9 +176,9 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
                 registers = self._instrument.read_registers(0x1000, 5)
                 self._state["position"] = registers[0] / 10
                 self._state["destination"] = registers[1] / 10
-                registers = self._instrument.read_registers(0x1016, 1)
-                data_bytes = struct.pack(">h", *registers)
-                self._state["temperature_regulation_value"] = struct.unpack(">h", data_bytes)[0]
+                registers = self._instrument.read_registers(0x1012, 2)
+                self._state["output_1_duty"] = registers[0] / 10
+                self._state["output_2_duty"] = registers[1] / 10
                 await asyncio.sleep(0.25)
             except minimalmodbus.LocalEchoError:
                 continue
