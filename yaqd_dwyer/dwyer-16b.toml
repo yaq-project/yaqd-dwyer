@@ -100,7 +100,7 @@ response = "double"
 doc = "Ramp time, in minutes."
 
 [messages.set_ramp_time]
-request = [{"name"="ramp_time", "type"="float"}]
+request = [{"name"="ramp_time", "type"="double"}]
 doc = "Ramp time, in minutes. Set to zero to disable ramping."
 
 [messages.get_ramp_time_limits]
@@ -154,7 +154,7 @@ control_kind = "normal"
 record_kind = "metadata"
 
 [properties.ramp_time]
-type = "float"
+type = "double"
 doc = "Ramp time."
 getter = "get_ramp_time"
 setter = "set_ramp_time"
@@ -164,14 +164,14 @@ control_kind = "hinted"
 record_kind = "metadata"
 
 [properties.output_1_duty]
-type = "foat"
+type = "double"
 doc = "Current duty cycle as percentage."
 getter = "get_output_1_duty"
 control_kind = "normal"
 record_kind = "data"
 
 [properties.output_2_duty]
-type = "foat"
+type = "double"
 doc = "Current duty cycle as percentage."
 getter = "get_output_2_duty"
 control_kind = "normal"
