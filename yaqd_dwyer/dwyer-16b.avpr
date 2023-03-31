@@ -329,7 +329,7 @@
             "request": [
                 {
                     "name": "ramp_time",
-                    "type": "float"
+                    "type": "double"
                 }
             ],
             "response": "null"
@@ -411,7 +411,7 @@
             "options_getter": null,
             "record_kind": "data",
             "setter": null,
-            "type": "foat",
+            "type": "double",
             "units_getter": null
         },
         "output_2_duty": {
@@ -422,7 +422,7 @@
             "options_getter": null,
             "record_kind": "data",
             "setter": null,
-            "type": "foat",
+            "type": "double",
             "units_getter": null
         },
         "position": {
@@ -455,7 +455,7 @@
             "options_getter": null,
             "record_kind": "metadata",
             "setter": "set_ramp_time",
-            "type": "float",
+            "type": "double",
             "units_getter": "get_ramp_time_units"
         }
     },
