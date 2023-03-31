@@ -162,6 +162,6 @@ record_kind = "metadata"
 [properties.temperature_regulation_value]
 type = "foat"
 doc = "Current duty cycle as percentage."
-getter = "get_temperature_regulation_value"]
+getter = "get_temperature_regulation_value"
 control_kind = "normal"
 record_kind = "data"
