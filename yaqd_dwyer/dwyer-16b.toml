@@ -64,6 +64,11 @@ type = "double"
 default = 0.0
 doc = "Integral offset. Correction value for systems that tend to ring. Note that this daemon forces controller to only use PID profile zero. Units percentage"
 
+[state.temperature_regulation_value]
+type = "double"
+default = 0.0
+doc = "Current output duty cycle as a percentage."
+
 [messages]
 
 [messages.get_derivative_constant]
@@ -105,6 +110,10 @@ doc = "Ramp time limits in minutes."
 [messages.get_ramp_time_units]
 response = "string"
 doc = "Ramp time units."
+
+[messages.get_temperature_regulation_value]
+response = "double"
+doc = "Current output duty cycle as a percentage."
 
 [properties]
 
@@ -149,3 +158,10 @@ units_getter = "get_ramp_time_units"
 limits_getter = "get_ramp_time_limits"
 control_kind = "hinted"
 record_kind = "metadata"
+
+[properties.temperature_regulation_value]
+type = "foat"
+doc = "Current duty cycle as percentage."
+getter = "get_temperature_regulation_value"]
+control_kind = "normal"
+record_kind = "data"
