@@ -93,6 +93,9 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
     def get_ramp_time_units(self) -> str:
         return "min"
 
+    def get_temperature_regulation_value(self) -> float:
+        return self._state["temperature_regulation_value"]
+
     async def _poll_pid(self):
         while True:
             self._read_pid_to_state()
