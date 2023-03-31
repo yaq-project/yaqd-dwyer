@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+- 16b: temperature regulation value now exposed via properties
+
 ### Fixed
 - 16b: added forgotten dictionarys converting parameters from config into minimalmodbus
 
