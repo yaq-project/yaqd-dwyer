@@ -177,8 +177,8 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
                 self._state["position"] = registers[0] / 10
                 self._state["destination"] = registers[1] / 10
                 registers = self._instrument.read_registers(0x1012, 2)
-                self._state["output_1_duty"] = registers[0] / 10 
-                self._state["output_2_duty"] = registers[1] / 10 
+                self._state["output_1_duty"] = registers[0] / 10
+                self._state["output_2_duty"] = registers[1] / 10
                 await asyncio.sleep(0.25)
             except minimalmodbus.LocalEchoError:
                 continue
