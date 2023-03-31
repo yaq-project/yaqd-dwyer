@@ -24,6 +24,11 @@ def temp2int(value):
     return value
 
 
+parity_options = {"even": "E", "odd": "O"}
+
+stop_bit_options = {"one": 1, "one_and_half": 1.5, "two": 2}
+
+
 class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
     _kind = "dwyer-16b"
 
@@ -34,8 +39,8 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
         )
         self._instrument.serial.baudrate = self._config["baud_rate"]
         self._instrument.serial.bytesize = self._config["byte_size"]
-        self._instrument.serial.stopbits = self._config["stop_bits"]
-        self._instrument.serial.parity = self._config["parity"]
+        self._instrument.serial.stopbits = stop_bit_options[self._config["stop_bits"]]
+        self._instrument.serial.parity = parity_options[self._config["parity"]]
         self._instrument.handle_local_echo = self._config["modbus_handle_echo"]
         # ensure that control method is PID
         self._ramping = False
