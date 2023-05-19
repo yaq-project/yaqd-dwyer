@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Fixed
 - 16b: added forgotten dictionarys converting parameters from config into minimalmodbus
+- 16b: broken ramping
 
 ## [2023.3.0]
 

@@ -115,11 +115,10 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
             self._instrument.write_register(0x1005, 0)
             self._instrument.write_register(0x1001, temp2int(position))
             return
-        current_temperature = self._state["position"]
         # do not soak at current temperature
         self._instrument.write_register(0x2080, 0)
         # start at current temperature
-        self._instrument.write_register(0x2000, current_temperature)
+        self._instrument.write_register(0x2000, temp2int(self._state["position"]))
         # reach goal temperature at time
         self._instrument.write_register(0x2081, int(self._state["ramp_time"]))
         self._instrument.write_register(0x2001, temp2int(position))  # goal temperature
@@ -164,6 +163,7 @@ class Dwyer16B(HasLimits, HasPosition, UsesUart, UsesSerial, IsDaemon):
         """Continually monitor and update the current daemon state."""
         while True:
             try:
+                print(self._ramping)
                 if self._ramping:
                     self._busy = True
                 else:
