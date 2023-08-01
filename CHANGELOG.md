@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Fixed
+- writing the destination to the controller seems to confuse PID regulation, now only write as needed
+
 ## [2023.5.0]
 
 ### Added
